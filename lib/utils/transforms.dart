@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:grafana_api/api/data/dashboard/preview/single_dashboard.dart';
+import 'package:grafana_api/api/data/dashboard/dashboard_response.dart';
 import 'package:http/http.dart';
 
-Future<SingleDashboard> defaultSingleDashboardTransform(
+Future<DashboardResponse> defaultDashboardResponseTransform(
     Response response) async {
-  return await compute<String, SingleDashboard>(
-    _isolateTransformSingleDashboard,
+  return await compute<String, DashboardResponse>(
+    _isolateTransformDashboardResponse,
     response.body,
   );
 }
 
-SingleDashboard _isolateTransformSingleDashboard(String body) {
-  return SingleDashboard.fromJson(jsonDecode(body));
+DashboardResponse _isolateTransformDashboardResponse(String body) {
+  return DashboardResponse.fromJson(jsonDecode(body));
 }
