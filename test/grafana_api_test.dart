@@ -7,7 +7,7 @@ void main() {
     final api = GrafanaBaseApi(
       client: GrafanaClient(
         apiKey:
-            'eyJrIjoiRHdCdUlMRnlmUWgxTEVFS2d6YjJUeEpLZUdicWR6a0giLCJuIjoidGVzdCIsImlkIjoxfQ==',
+            'eyJrIjoiOEtkR1lWSU5lU1ppb0hJRVQyVjlnQUUzQkpjNVlwQnMiLCJuIjoidGVzdCIsImlkIjoxfQ==',
         baseUrl: 'http://192.168.178.54:3000',
       ),
     );

@@ -115,7 +115,7 @@ class Panel {
   });
 
   final List<PanelTarget> targets;
-  final PanelGridPosition gridPos;
+  final PanelGridPosition? gridPos;
   final int id;
   final String pluginVersion;
   final String title;
@@ -152,13 +152,15 @@ class PanelTarget {
     required this.refId,
     required this.resultFormat,
     required this.datasource,
+    required this.select,
   });
 
   factory PanelTarget.fromJson(Map<String, dynamic> json) =>
       _$PanelTargetFromJson(json);
 
-  final PanelTargetDataSource datasource;
-  final String alias;
+  final List<List<TargetSelect>> select;
+  final PanelTargetDataSource? datasource;
+  final String? alias;
   final String measurement;
   final String orderByTime;
   final String policy;
@@ -178,4 +180,36 @@ class PanelTargetDataSource {
 
   final String type;
   final String uid;
+}
+
+@JsonSerializable()
+class TargetSelect {
+  const TargetSelect({
+    required this.type,
+    required this.params,
+  });
+
+  factory TargetSelect.fromJson(Map<String, dynamic> json) =>
+      _$TargetSelectFromJson(json);
+
+  final List<String> params;
+  final String type;
+}
+
+@JsonSerializable()
+class TargetTag {
+  const TargetTag({
+    required this.value,
+    required this.key,
+    required this.condition,
+    required this.operator,
+  });
+
+  factory TargetTag.fromJson(Map<String, dynamic> json) =>
+      _$TargetTagFromJson(json);
+
+  final String? condition;
+  final String key;
+  final String operator;
+  final String value;
 }

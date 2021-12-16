@@ -103,8 +103,9 @@ Panel _$PanelFromJson(Map<String, dynamic> json) => Panel(
       title: json['title'] as String,
       type: json['type'] as String,
       pluginVersion: json['pluginVersion'] as String,
-      gridPos:
-          PanelGridPosition.fromJson(json['gridPos'] as Map<String, dynamic>),
+      gridPos: json['gridPos'] == null
+          ? null
+          : PanelGridPosition.fromJson(json['gridPos'] as Map<String, dynamic>),
       targets: (json['targets'] as List<dynamic>)
           .map((e) => PanelTarget.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -136,18 +137,26 @@ Map<String, dynamic> _$PanelGridPositionToJson(PanelGridPosition instance) =>
     };
 
 PanelTarget _$PanelTargetFromJson(Map<String, dynamic> json) => PanelTarget(
-      alias: json['alias'] as String,
+      alias: json['alias'] as String?,
       measurement: json['measurement'] as String,
       orderByTime: json['orderByTime'] as String,
       policy: json['policy'] as String,
       refId: json['refId'] as String,
       resultFormat: json['resultFormat'] as String,
-      datasource: PanelTargetDataSource.fromJson(
-          json['datasource'] as Map<String, dynamic>),
+      datasource: json['datasource'] == null
+          ? null
+          : PanelTargetDataSource.fromJson(
+              json['datasource'] as Map<String, dynamic>),
+      select: (json['select'] as List<dynamic>)
+          .map((e) => (e as List<dynamic>)
+              .map((e) => TargetSelect.fromJson(e as Map<String, dynamic>))
+              .toList())
+          .toList(),
     );
 
 Map<String, dynamic> _$PanelTargetToJson(PanelTarget instance) =>
     <String, dynamic>{
+      'select': instance.select,
       'datasource': instance.datasource,
       'alias': instance.alias,
       'measurement': instance.measurement,
@@ -169,4 +178,30 @@ Map<String, dynamic> _$PanelTargetDataSourceToJson(
     <String, dynamic>{
       'type': instance.type,
       'uid': instance.uid,
+    };
+
+TargetSelect _$TargetSelectFromJson(Map<String, dynamic> json) => TargetSelect(
+      type: json['type'] as String,
+      params:
+          (json['params'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$TargetSelectToJson(TargetSelect instance) =>
+    <String, dynamic>{
+      'params': instance.params,
+      'type': instance.type,
+    };
+
+TargetTag _$TargetTagFromJson(Map<String, dynamic> json) => TargetTag(
+      value: json['value'] as String,
+      key: json['key'] as String,
+      condition: json['condition'] as String?,
+      operator: json['operator'] as String,
+    );
+
+Map<String, dynamic> _$TargetTagToJson(TargetTag instance) => <String, dynamic>{
+      'condition': instance.condition,
+      'key': instance.key,
+      'operator': instance.operator,
+      'value': instance.value,
     };
