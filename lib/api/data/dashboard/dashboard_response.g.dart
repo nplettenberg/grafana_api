@@ -80,10 +80,12 @@ Dashboard _$DashboardFromJson(Map<String, dynamic> json) => Dashboard(
       panels: (json['panels'] as List<dynamic>)
           .map((e) => Panel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      refresh: json['refresh'] as String,
     );
 
 Map<String, dynamic> _$DashboardToJson(Dashboard instance) => <String, dynamic>{
       'panels': instance.panels,
+      'refresh': instance.refresh,
       'editable': instance.editable,
       'fiscalYearStartMonth': instance.fiscalYearStartMonth,
       'graphTooltip': instance.graphTooltip,
@@ -152,12 +154,20 @@ PanelTarget _$PanelTargetFromJson(Map<String, dynamic> json) => PanelTarget(
               .map((e) => TargetSelect.fromJson(e as Map<String, dynamic>))
               .toList())
           .toList(),
+      tags: (json['tags'] as List<dynamic>)
+          .map((e) => TargetTag.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      groupBy: (json['groupBy'] as List<dynamic>)
+          .map((e) => GroupBy.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PanelTargetToJson(PanelTarget instance) =>
     <String, dynamic>{
       'select': instance.select,
+      'tags': instance.tags,
       'datasource': instance.datasource,
+      'groupBy': instance.groupBy,
       'alias': instance.alias,
       'measurement': instance.measurement,
       'orderByTime': instance.orderByTime,
@@ -204,4 +214,15 @@ Map<String, dynamic> _$TargetTagToJson(TargetTag instance) => <String, dynamic>{
       'key': instance.key,
       'operator': instance.operator,
       'value': instance.value,
+    };
+
+GroupBy _$GroupByFromJson(Map<String, dynamic> json) => GroupBy(
+      type: json['type'] as String,
+      params:
+          (json['params'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$GroupByToJson(GroupBy instance) => <String, dynamic>{
+      'params': instance.params,
+      'type': instance.type,
     };

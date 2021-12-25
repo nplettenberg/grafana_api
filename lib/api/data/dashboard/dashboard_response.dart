@@ -83,9 +83,11 @@ class Dashboard {
     required this.timezone,
     required this.weekStart,
     required this.panels,
+    required this.refresh,
   });
 
   final List<Panel> panels;
+  final String refresh;
   final bool editable;
   final int fiscalYearStartMonth;
   final int graphTooltip;
@@ -153,13 +155,17 @@ class PanelTarget {
     required this.resultFormat,
     required this.datasource,
     required this.select,
+    required this.tags,
+    required this.groupBy,
   });
 
   factory PanelTarget.fromJson(Map<String, dynamic> json) =>
       _$PanelTargetFromJson(json);
 
   final List<List<TargetSelect>> select;
+  final List<TargetTag> tags;
   final PanelTargetDataSource? datasource;
+  final List<GroupBy> groupBy;
   final String? alias;
   final String measurement;
   final String orderByTime;
@@ -212,4 +218,18 @@ class TargetTag {
   final String key;
   final String operator;
   final String value;
+}
+
+@JsonSerializable()
+class GroupBy {
+  const GroupBy({
+    required this.type,
+    required this.params,
+  });
+
+  factory GroupBy.fromJson(Map<String, dynamic> json) =>
+      _$GroupByFromJson(json);
+
+  final List<String> params;
+  final String type;
 }

@@ -1,30 +1,11 @@
-import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 
 abstract class AbstractGrafanaClient {
-  const AbstractGrafanaClient({
-    required this.baseUrl,
-  });
+  const AbstractGrafanaClient();
 
-  final String baseUrl;
-
-  bool get isHttps => baseUrl.startsWith('https://');
-
-  String get host =>
-      baseUrl.replaceAll('https://', '').replaceAll('http://', '');
-
-  Uri buildUrl(
+  Future<Response<T>> get<T>(
     String path, {
     Map<String, String>? queryParameters,
-  }) {
-    if (isHttps) {
-      return Uri.https(host, '/api/$path', queryParameters);
-    }
-
-    return Uri.http(host, '/api/$path', queryParameters);
-  }
-
-  Future<Response> get(
-    Uri uri, {
-    Map<String, String>? headers,
+    Options? options,
   });
 }

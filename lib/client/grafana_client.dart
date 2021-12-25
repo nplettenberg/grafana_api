@@ -1,8 +1,7 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:grafana_api/client/abstract_grafana_client.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
 /// A function used to transform the response.
 ///
@@ -10,37 +9,52 @@ import 'package:http/http.dart';
 /// decoded in an isolate by default.
 typedef TransformResponse<T> = FutureOr<T> Function(Response response);
 
-class GrafanaClient extends AbstractGrafanaClient {
-  GrafanaClient({
-    required this.apiKey,
-    required String baseUrl,
-  }) : super(baseUrl: baseUrl);
+class TokenInterceptor extends InterceptorsWrapper {
+  TokenInterceptor({
+    required this.apiToken,
+  });
 
-  final http.Client client = http.Client();
-
-  final String apiKey;
-
-  Map<String, String> get defaultHeaders => {
-        'Authorization': 'Bearer $apiKey',
-      };
+  final String apiToken;
 
   @override
-  Future<http.Response> get(
-    Uri uri, {
-    Map<String, String>? headers,
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    options.headers['Authorization'] = 'Bearer $apiToken';
+
+    handler.next(options);
+  }
+}
+
+class GrafanaClient extends AbstractGrafanaClient {
+  GrafanaClient({
+    required String apiKey,
+    required String baseUrl,
   }) {
-    final requestHeaders = defaultHeaders;
+    client = Dio(BaseOptions(
+      baseUrl: '$baseUrl/api/',
+    ));
 
-    if (headers != null) {
-      requestHeaders.addAll(headers);
+    client.interceptors.addAll([
+      TokenInterceptor(apiToken: apiKey),
+      LogInterceptor(),
+    ]);
+  }
+
+  late final Dio client;
+
+  @override
+  Future<Response<T>> get<T>(
+    String path, {
+    Map<String, String>? queryParameters,
+    Options? options,
+  }) async {
+    try {
+      return await client.get<T>(
+        path,
+        queryParameters: queryParameters,
+        options: options,
+      );
+    } catch (e, st) {
+      return Future.error(e, st);
     }
-
-    return client.get(uri, headers: requestHeaders).then((response) {
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        return response;
-      }
-
-      return Future.error(response.body);
-    });
   }
 }
