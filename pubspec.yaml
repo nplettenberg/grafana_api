@@ -9,9 +9,9 @@ environment:
 
 dependencies:
   build_runner: ^2.1.5
+  dio: ^4.0.4
   flutter:
     sdk: flutter
-  http: ^0.13.4
   json_serializable: ^6.1.1
 
 dev_dependencies:

@@ -1,12 +1,14 @@
-import 'package:grafana_api/api/dashboard.dart';
-import 'package:grafana_api/client/abstract_grafana_client.dart';
+import 'package:grafana_api/grafana_api.dart';
 
-class GrafanaBaseApi {
-  GrafanaBaseApi({
+class GrafanaApi {
+  GrafanaApi({
     required this.client,
-  }) : dashboardApi = DashboardApi(client: client);
+  })  : dashboardApi = DashboardApi(client: client),
+        dataSourceApi = DataSourceApi(client: client);
 
   final AbstractGrafanaClient client;
 
   final DashboardApi dashboardApi;
+
+  final DataSourceApi dataSourceApi;
 }
