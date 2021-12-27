@@ -68,6 +68,65 @@ class Meta {
 }
 
 @JsonSerializable()
+class HomeDashboardResponse {
+  HomeDashboardResponse({
+    required this.redirectUrl,
+  });
+
+  factory HomeDashboardResponse.fromJson(Map<String, dynamic> json) {
+    return _$HomeDashboardResponseFromJson(json);
+  }
+
+  final String? redirectUrl;
+
+  String? get uid {
+    if (redirectUrl == null) {
+      return null;
+    }
+
+    return redirectUrl!.split('/')[1];
+  }
+
+  Map<String, dynamic> toJson() => _$HomeDashboardResponseToJson(this);
+}
+
+@JsonSerializable()
+class DashboardTag {
+  DashboardTag({
+    required this.term,
+    required this.count,
+  });
+
+  factory DashboardTag.fromJson(Map<String, dynamic> json) {
+    return _$DashboardTagFromJson(json);
+  }
+
+  final String term;
+  final int count;
+
+  Map<String, dynamic> toJson() => _$DashboardTagToJson(this);
+}
+
+@JsonSerializable()
+class DashboardDeletedResponse {
+  DashboardDeletedResponse({
+    required this.id,
+    required this.title,
+    required this.message,
+  });
+
+  factory DashboardDeletedResponse.fromJson(Map<String, dynamic> json) {
+    return _$DashboardDeletedResponseFromJson(json);
+  }
+
+  final String title;
+  final String message;
+  final int id;
+
+  Map<String, dynamic> toJson() => _$DashboardDeletedResponseToJson(this);
+}
+
+@JsonSerializable()
 class Dashboard {
   const Dashboard({
     required this.version,

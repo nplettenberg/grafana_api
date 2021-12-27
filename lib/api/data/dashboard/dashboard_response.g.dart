@@ -64,6 +64,45 @@ Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
       'provisionedExternalId': instance.provisionedExternalId,
     };
 
+HomeDashboardResponse _$HomeDashboardResponseFromJson(
+        Map<String, dynamic> json) =>
+    HomeDashboardResponse(
+      redirectUrl: json['redirectUrl'] as String?,
+    );
+
+Map<String, dynamic> _$HomeDashboardResponseToJson(
+        HomeDashboardResponse instance) =>
+    <String, dynamic>{
+      'redirectUrl': instance.redirectUrl,
+    };
+
+DashboardTag _$DashboardTagFromJson(Map<String, dynamic> json) => DashboardTag(
+      term: json['term'] as String,
+      count: json['count'] as int,
+    );
+
+Map<String, dynamic> _$DashboardTagToJson(DashboardTag instance) =>
+    <String, dynamic>{
+      'term': instance.term,
+      'count': instance.count,
+    };
+
+DashboardDeletedResponse _$DashboardDeletedResponseFromJson(
+        Map<String, dynamic> json) =>
+    DashboardDeletedResponse(
+      id: json['id'] as int,
+      title: json['title'] as String,
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$DashboardDeletedResponseToJson(
+        DashboardDeletedResponse instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'message': instance.message,
+      'id': instance.id,
+    };
+
 Dashboard _$DashboardFromJson(Map<String, dynamic> json) => Dashboard(
       version: json['version'] as int,
       uid: json['uid'] as String,

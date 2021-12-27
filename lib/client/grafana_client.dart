@@ -57,4 +57,19 @@ class GrafanaClient extends AbstractGrafanaClient {
       return Future.error(e, st);
     }
   }
+
+  @override
+  Future<Response<T>> delete<T>(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) {
+    return client.delete<T>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+    );
+  }
 }

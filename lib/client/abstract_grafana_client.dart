@@ -8,4 +8,11 @@ abstract class AbstractGrafanaClient {
     Map<String, String>? queryParameters,
     Options? options,
   });
+
+  Future<Response<T>> delete<T>(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  });
 }

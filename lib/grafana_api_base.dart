@@ -1,7 +1,7 @@
 import 'package:grafana_api/grafana_api.dart';
 
-class GrafanaBaseApi {
-  GrafanaBaseApi({
+class GrafanaApi {
+  GrafanaApi({
     required this.client,
   })  : dashboardApi = DashboardApi(client: client),
         dataSourceApi = DataSourceApi(client: client);
